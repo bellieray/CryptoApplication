@@ -1,4 +1,4 @@
-package com.example.cryptocurrency.model
+package com.example.cryptoapp.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -28,7 +28,7 @@ data class CryptoDetailResponse(
     val categories: List<Any?>?,
     @SerializedName("genesis_date")
     val genesisDate: Any?,
-    val image: com.example.cryptocurrency.model.Image?,
+    val image: Image?,
     @SerializedName("last_updated")
     val lastUpdated: String?,
     @SerializedName("country_origin")

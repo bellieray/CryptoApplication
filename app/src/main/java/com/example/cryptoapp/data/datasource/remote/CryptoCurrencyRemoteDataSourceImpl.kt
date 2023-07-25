@@ -1,10 +1,10 @@
-package com.example.cryptocurrency.data.datasource.remote
+package com.example.cryptoapp.data.datasource.remote
 
-import com.example.cryptocurrency.api.CryptoCurrencyService
-import com.example.cryptocurrency.domain.datasource.remote.CryptoCurrencyRemoteDataSource
-import com.example.cryptocurrency.model.Crypto
-import com.example.cryptocurrency.model.CryptoDetailResponse
-import com.example.cryptocurrency.utils.Result
+import com.example.cryptoapp.api.CryptoCurrencyService
+import com.example.cryptoapp.domain.datasource.remote.CryptoCurrencyRemoteDataSource
+import com.example.cryptoapp.model.Crypto
+import com.example.cryptoapp.model.CryptoDetailResponse
+import com.example.cryptoapp.utils.Result
 import retrofit2.HttpException
 import javax.inject.Inject
 

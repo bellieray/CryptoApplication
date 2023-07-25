@@ -1,4 +1,4 @@
-package com.example.cryptocurrency.model
+package com.example.cryptoapp.model
 
 data class Prices(
     val turkishLira: Double?,

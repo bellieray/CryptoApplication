@@ -1,7 +1,9 @@
-package com.example.cryptocurrency.di
+package com.example.cryptoapp.di
 
-import com.example.cryptocurrency.api.CryptoCurrencyService
+import com.example.cryptoapp.api.CryptoCurrencyService
 import com.example.cryptocurrency.utils.Constants.BASE_URL
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +18,7 @@ import javax.inject.Singleton
 object NetworkModule {
     @Provides
     @Singleton
-    fun provideOkhttpClient(): OkHttpClient? {
+    fun provideOkhttpClient(): OkHttpClient {
         val client = OkHttpClient.Builder()
         return client.build()
     }
@@ -32,6 +34,14 @@ object NetworkModule {
             .client(okHttpClient)
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFirestore(): FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
 
     @Provides

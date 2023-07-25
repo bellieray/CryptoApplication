@@ -1,4 +1,4 @@
-package com.example.cryptocurrency.domain.datasource.local
+package com.example.cryptoapp.domain.datasource.local
 
 interface CryptoCurrencyLocalDataSource {
 

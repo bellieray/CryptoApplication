@@ -1,8 +1,8 @@
-package com.example.cryptocurrency.domain.datasource.remote
+package com.example.cryptoapp.domain.datasource.remote
 
-import com.example.cryptocurrency.model.Crypto
-import com.example.cryptocurrency.model.CryptoDetailResponse
-import com.example.cryptocurrency.utils.Result
+import com.example.cryptoapp.model.Crypto
+import com.example.cryptoapp.model.CryptoDetailResponse
+import com.example.cryptoapp.utils.Result
 
 interface CryptoCurrencyRemoteDataSource {
     suspend fun getAllCryptos(): Result<List<Crypto>>

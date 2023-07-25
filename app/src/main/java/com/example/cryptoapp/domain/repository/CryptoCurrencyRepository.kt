@@ -1,8 +1,10 @@
-package com.example.cryptocurrency.domain.repository
+package com.example.cryptoapp.domain.repository
 
-import com.example.cryptocurrency.model.Crypto
-import com.example.cryptocurrency.model.CryptoDetailResponse
-import com.example.cryptocurrency.utils.Result
+import com.example.cryptoapp.model.Crypto
+import com.example.cryptoapp.model.CryptoDetailResponse
+import com.example.cryptoapp.utils.Result
+import dagger.Provides
+
 
 interface CryptoCurrencyRepository {
     suspend fun getAllCryptos(): Result<List<Crypto>>

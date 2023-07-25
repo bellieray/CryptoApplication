@@ -1,7 +1,7 @@
-package com.example.cryptocurrency.api
+package com.example.cryptoapp.api
 
-import com.example.cryptocurrency.model.Crypto
-import com.example.cryptocurrency.model.CryptoDetailResponse
+import com.example.cryptoapp.model.Crypto
+import com.example.cryptoapp.model.CryptoDetailResponse
 import com.example.cryptocurrency.utils.Constants.COINS_BY_ID
 import com.example.cryptocurrency.utils.Constants.COINS_LIST
 import retrofit2.Response

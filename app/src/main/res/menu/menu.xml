@@ -9,7 +9,7 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/matchFragment"
+        android:id="@+id/favoriteFragment"
         android:icon="@drawable/selector_bottom_bar_favorite"
         android:title="@string/favorites"
         app:showAsAction="never" />

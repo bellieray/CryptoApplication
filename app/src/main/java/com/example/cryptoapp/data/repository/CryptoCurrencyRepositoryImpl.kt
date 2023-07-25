@@ -1,9 +1,11 @@
-package com.example.cryptocurrency.data.repository
+package com.example.cryptoapp.data.repository
 
-import com.example.cryptocurrency.domain.datasource.remote.CryptoCurrencyRemoteDataSource
-import com.example.cryptocurrency.domain.repository.CryptoCurrencyRepository
+import com.example.cryptoapp.domain.datasource.remote.CryptoCurrencyRemoteDataSource
+import com.example.cryptoapp.domain.repository.CryptoCurrencyRepository
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class CryptoCurrencyRepositoryImpl @Inject constructor(
     private val cryptoCurrencyRemoteDataSource: CryptoCurrencyRemoteDataSource
 ) : CryptoCurrencyRepository {

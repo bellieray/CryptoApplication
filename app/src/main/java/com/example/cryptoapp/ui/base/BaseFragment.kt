@@ -1,12 +1,16 @@
-package com.example.cryptocurrency.ui.base
+package com.example.cryptoapp.ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
+import com.example.cryptoapp.utils.navigateWithPushAnimation
 
 abstract class BaseFragment<VDB : ViewDataBinding> : Fragment() {
 
@@ -29,36 +33,20 @@ abstract class BaseFragment<VDB : ViewDataBinding> : Fragment() {
     }
 
 
-    /* fun handleError(exception: Exception, activity: Activity) {
-        when (exception) {
-            is HttpException -> DialogUtils.showCustomAlert(
-                activity, errorText = exception.localizedMessage.toString()
-            )
-
-            is IOException -> {
-                DialogUtils.showCustomAlert(
-                    activity,
-                    R.string.please_check_internet_connection
-                )
-            }
-
-            is TimeoutException -> {
-                DialogUtils.showCustomAlert(
-                    activity,
-                    R.string.request_time_out
-                )
-            }
-        }
-    } */
+    fun notify(errorText: String) {
+        Toast.makeText(requireContext(), errorText, Toast.LENGTH_LONG).show()
+    }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
 
+    fun navigateTo(direction: NavDirections) {
+        findNavController().navigateWithPushAnimation(direction)
+    }
 
     abstract fun initViews()
     protected open fun initObservers() {}
-
     abstract fun getFragmentView(): Int
 }
