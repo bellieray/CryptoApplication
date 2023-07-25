@@ -22,11 +22,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 paddingOutResId = R.dimen.margin_20
             )
         )
-
     }
 
-    private fun onItemClicked() {
-
+    private fun onItemClicked(id: String?) {
+        navigateTo(HomeFragmentDirections.actionHomeFragmentToDetailFragment(id = id))
     }
 
 

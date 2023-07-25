@@ -1,27 +1,25 @@
-package com.example.cryptoapp.ui.home
-
+package com.example.cryptoapp.ui.detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cryptoapp.model.Crypto
-import com.example.cryptocurrency.databinding.ItemHomeCryptoBinding
+import com.example.cryptocurrency.databinding.ItemDialogRefreshTimeBinding
 
-class HomeListAdapter(val onItemClicked: (String?) -> Unit) :
-    ListAdapter<Crypto, RecyclerView.ViewHolder>(DiffCallback) {
-    object DiffCallback : DiffUtil.ItemCallback<Crypto>() {
+class RefreshTimeAdapter(val onItemClicked: (String) -> Unit) :
+    ListAdapter<String, RecyclerView.ViewHolder>(DiffCallback) {
+    object DiffCallback : DiffUtil.ItemCallback<String>() {
         override fun areItemsTheSame(
-            oldItem: Crypto,
-            newItem: Crypto
+            oldItem: String,
+            newItem: String
         ): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(
-            oldItem: Crypto,
-            newItem: Crypto
+            oldItem: String,
+            newItem: String
         ): Boolean {
             return oldItem == newItem
         }
@@ -29,8 +27,8 @@ class HomeListAdapter(val onItemClicked: (String?) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return HomeViewHolder(
-            ItemHomeCryptoBinding.inflate(
+        return RefreshTimeViewHolder(
+            ItemDialogRefreshTimeBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -40,16 +38,16 @@ class HomeListAdapter(val onItemClicked: (String?) -> Unit) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is HomeViewHolder -> holder.bind(getItem(position))
+            is RefreshTimeViewHolder -> holder.bind(getItem(position))
         }
     }
 
-    inner class HomeViewHolder(val binding: ItemHomeCryptoBinding) :
+    inner class RefreshTimeViewHolder(val binding: ItemDialogRefreshTimeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(crypto: Crypto) {
-            binding.crypto = crypto
+        fun bind(text: String) {
+            binding.tvRefreshTime.text = text
             binding.root.setOnClickListener {
-                onItemClicked.invoke(crypto.id)
+                onItemClicked.invoke(text)
             }
         }
     }

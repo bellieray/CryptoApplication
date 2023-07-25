@@ -5,6 +5,7 @@ import com.example.cryptoapp.domain.datasource.remote.CryptoCurrencyRemoteDataSo
 import com.example.cryptoapp.model.Crypto
 import com.example.cryptoapp.model.CryptoDetailResponse
 import com.example.cryptoapp.utils.Result
+import kotlinx.coroutines.delay
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -39,6 +40,16 @@ class CryptoCurrencyRemoteDataSourceImpl @Inject constructor(private val cryptoC
             Result.Failed(e.message().toString())
         } catch (e: Throwable) {
             Result.Failed(e.localizedMessage.toString())
+        }
+    }
+
+    override suspend fun getPrice(coinId: String, refreshTime: String): Result<Double> {
+        return try {
+            val data = cryptoCurrencyService.getCoinById(coinId).body()?.marketData?.currentPrice?.usd
+            delay(refreshTime.toInt() * 1000L)
+            Result.Success(data)
+        } catch (e: Exception) {
+            Result.Failed(e.localizedMessage)
         }
     }
 }

@@ -11,7 +11,7 @@ import com.example.cryptocurrency.R
 import kotlinx.coroutines.launch
 
 fun Fragment.observeData(doOnObserve: suspend () -> Unit) {
-    this.viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.lifecycleScope.launch {
         viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
             doOnObserve.invoke()
         }

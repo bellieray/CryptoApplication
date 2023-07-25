@@ -1,5 +1,6 @@
 package com.example.cryptoapp.ui.home
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cryptoapp.domain.repository.CryptoCurrencyRepository
@@ -13,7 +14,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val cryptoCurrencyRepository: CryptoCurrencyRepository) :
+class HomeViewModel @Inject constructor(
+    private val cryptoCurrencyRepository: CryptoCurrencyRepository
+) :
     ViewModel() {
     private val _homeViewState = MutableStateFlow(HomeViewState())
     val homeViewState = _homeViewState.asStateFlow()

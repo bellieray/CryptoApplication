@@ -8,6 +8,8 @@
         <variable
             name="crypto"
             type="com.example.cryptoapp.model.Crypto" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,17 +20,16 @@
         android:paddingHorizontal="25dp"
         android:paddingVertical="25dp">
 
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_item_home_crypto_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:maxWidth="200dp"
-            android:maxLines="1"
             android:ellipsize="end"
             android:fontFamily="@font/poppins_regular"
             android:includeFontPadding="false"
+            android:maxWidth="200dp"
+            android:maxLines="1"
             android:text="@{crypto.name}"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -42,9 +43,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:maxLines="1"
             android:ellipsize="end"
             android:fontFamily="@font/poppins_regular"
+            android:maxLines="1"
             android:text="@{crypto.symbol}"
             android:textColor="#818C99"
             android:textSize="15sp"

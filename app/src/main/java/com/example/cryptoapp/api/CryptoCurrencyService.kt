@@ -2,8 +2,8 @@ package com.example.cryptoapp.api
 
 import com.example.cryptoapp.model.Crypto
 import com.example.cryptoapp.model.CryptoDetailResponse
-import com.example.cryptocurrency.utils.Constants.COINS_BY_ID
-import com.example.cryptocurrency.utils.Constants.COINS_LIST
+import com.example.cryptoapp.utils.Constants.COINS_BY_ID
+import com.example.cryptoapp.utils.Constants.COINS_LIST
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

@@ -1,11 +1,12 @@
 package com.example.cryptoapp.di
 
+import com.example.cryptoapp.api.CryptoCurrencyService
 import com.example.cryptoapp.data.datasource.remote.CryptoCurrencyRemoteDataSourceImpl
 import com.example.cryptoapp.data.datasource.remote.FirebaseRemoteDataSourceImpl
 import com.example.cryptoapp.domain.datasource.remote.CryptoCurrencyRemoteDataSource
 import com.example.cryptoapp.domain.datasource.remote.FirebaseRemoteDataSource
-import com.example.cryptoapp.api.CryptoCurrencyService
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +23,9 @@ object DataSourceModule {
 
     @Singleton
     @Provides
-    fun provideFirebaseRemoteDataSource(auth: FirebaseAuth): FirebaseRemoteDataSource =
-        FirebaseRemoteDataSourceImpl(auth)
+    fun provideFirebaseRemoteDataSource(
+        auth: FirebaseAuth,
+        firestoreReference: CollectionReference
+    ): FirebaseRemoteDataSource =
+        FirebaseRemoteDataSourceImpl(auth, firestoreReference)
 }

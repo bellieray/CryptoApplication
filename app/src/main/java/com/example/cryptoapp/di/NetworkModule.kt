@@ -1,8 +1,12 @@
 package com.example.cryptoapp.di
 
+import android.app.Application
+import androidx.work.WorkManager
 import com.example.cryptoapp.api.CryptoCurrencyService
-import com.example.cryptocurrency.utils.Constants.BASE_URL
+import com.example.cryptoapp.utils.Constants.BASE_URL
+import com.example.cryptoapp.utils.Constants.FAVORITES
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
@@ -35,6 +39,13 @@ object NetworkModule {
             .build()
     }
 
+    @Singleton
+    @Provides
+    fun provideFavoriteReference(
+        db: FirebaseFirestore
+    ): CollectionReference = db.collection(FAVORITES)
+
+
     @Provides
     @Singleton
     fun provideFirebaseFirestore(): FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -51,4 +62,12 @@ object NetworkModule {
     ): CryptoCurrencyService {
         return retrofit.create(CryptoCurrencyService::class.java)
     }
+
+
+    @Provides
+    @Singleton
+    fun provideWorkManager(application: Application): WorkManager {
+        return WorkManager.getInstance(application)
+    }
+
 }

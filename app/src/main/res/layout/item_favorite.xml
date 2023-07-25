@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="crypto"
+            type="com.example.cryptoapp.model.FavoriteCrypto" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:background="@drawable/bg_item_home_crypto"
+        android:paddingHorizontal="25dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_crypto"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="40dp"
+            app:imageUrl="@{crypto.imageUrl}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeHolderDrawable="@{@drawable/ic_splash}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_item_home_crypto_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_regular"
+            android:includeFontPadding="false"
+            android:maxWidth="200dp"
+            android:maxLines="1"
+            android:text="@{crypto.name}"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_crypto"
+            app:layout_constraintStart_toEndOf="@id/iv_crypto"
+            app:layout_constraintTop_toTopOf="@id/iv_crypto"
+            tools:text="Bitcoin" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_item_favorite_current_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_regular"
+            android:includeFontPadding="false"
+            android:maxWidth="200dp"
+            android:maxLines="1"
+            android:text="@{@string/dollar_price(crypto.price)}"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_home_crypto_name"
+            tools:text="Bitcoin" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_item_favorite_changing_ratio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_regular"
+            android:includeFontPadding="false"
+            android:maxWidth="200dp"
+            android:maxLines="1"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_favorite_current_price"
+            app:textColorBasedOnPrefix="@{String.valueOf(crypto.changeLast24H)}"
+            tools:text="-0.555" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_favorite_symbol"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_regular"
+            android:maxLines="1"
+            android:text="@{crypto.symbol}"
+            android:textColor="#818C99"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_item_home_crypto_name"
+            app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
+            app:layout_constraintStart_toEndOf="@id/tv_item_home_crypto_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_home_crypto_name"
+            tools:text="Btt" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/appCompatImageView"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_arrow_right"
+            app:layout_constraintBottom_toBottomOf="@id/iv_crypto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_crypto" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
