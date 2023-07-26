@@ -10,6 +10,7 @@
         android:id="@+id/cl_other_horoscope"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
         android:background="@drawable/bg_bottomsheet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -47,7 +48,7 @@
             android:background="@drawable/bg_personal_detail_button"
             android:fontFamily="@font/poppins_regular"
             android:gravity="center"
-            android:text="Choose"
+            android:text="@string/choose"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="14sp"

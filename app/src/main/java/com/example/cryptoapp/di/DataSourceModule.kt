@@ -1,8 +1,11 @@
 package com.example.cryptoapp.di
 
 import com.example.cryptoapp.api.CryptoCurrencyService
+import com.example.cryptoapp.data.datasource.local.CoinsDAO
+import com.example.cryptoapp.data.datasource.local.CryptoCurrencyLocalDataSourceImpl
 import com.example.cryptoapp.data.datasource.remote.CryptoCurrencyRemoteDataSourceImpl
 import com.example.cryptoapp.data.datasource.remote.FirebaseRemoteDataSourceImpl
+import com.example.cryptoapp.domain.datasource.local.CryptoCurrencyLocalDataSource
 import com.example.cryptoapp.domain.datasource.remote.CryptoCurrencyRemoteDataSource
 import com.example.cryptoapp.domain.datasource.remote.FirebaseRemoteDataSource
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +23,11 @@ object DataSourceModule {
     @Provides
     fun provideCryptoCurrencyRemoteDataSource(cryptoCurrencyService: CryptoCurrencyService): CryptoCurrencyRemoteDataSource =
         CryptoCurrencyRemoteDataSourceImpl(cryptoCurrencyService)
+
+    @Singleton
+    @Provides
+    fun provideCryptoCurrencyLocalDataSource(coinsDAO: CoinsDAO): CryptoCurrencyLocalDataSource =
+        CryptoCurrencyLocalDataSourceImpl(coinsDAO)
 
     @Singleton
     @Provides

@@ -9,11 +9,14 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.example.cryptoapp.ui.decorations.BaseVerticalDividerItemDecoration
 import com.example.cryptoapp.ui.detail.RefreshTimeAdapter
+import com.example.cryptoapp.utils.DeviceUtils
 import com.example.cryptocurrency.R
 import com.example.cryptocurrency.databinding.DialogRefreshTimeBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+
+private const val SHEET_RATIO = 0.5F
 
 class RefreshTimeBottomSheetDialog(val onDismissed: () -> Unit, val onValueGet: (String) -> Unit) :
     BottomSheetDialogFragment() {
@@ -47,10 +50,16 @@ class RefreshTimeBottomSheetDialog(val onDismissed: () -> Unit, val onValueGet: 
             )
         )
         refreshTimeAdapter.submitList((1..60).map { it.toString() })
-
         binding.btnOtherHoroscope.setOnClickListener {
             onValueGet.invoke(value)
             dismiss()
+        }
+        binding.clOtherHoroscope.let { sheetView ->
+            SHEET_RATIO.let { ratio ->
+                val clParams = sheetView.layoutParams
+                clParams.height = (DeviceUtils.getDeviceHeight(requireActivity()) * ratio).toInt()
+                sheetView.layoutParams = clParams
+            }
         }
     }
 

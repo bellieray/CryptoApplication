@@ -9,6 +9,10 @@
             name="isLoading"
             type="Boolean" />
 
+        <variable
+            name="isSearchClearButtonVisible"
+            type="Boolean" />
+
         <import type="android.view.View" />
     </data>
 
@@ -48,7 +52,7 @@
                 android:layout_marginStart="20dp"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/poppins_regular"
-                android:hint="Search"
+                android:hint="@string/search"
                 android:imeOptions="actionSearch"
                 android:inputType="textVisiblePassword|textNoSuggestions"
                 android:maxLines="1"
@@ -67,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:src="@drawable/ic_close_black_12dp"
+                android:visibility="@{isSearchClearButtonVisible ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/et_search"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/et_search" />
@@ -87,10 +92,10 @@
             android:background="@color/app_color"
             android:elevation="10dp"
             android:visibility="@{isLoading ? View.VISIBLE : View.GONE, default=gone}"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_search_container"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_search_container">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="70dp"

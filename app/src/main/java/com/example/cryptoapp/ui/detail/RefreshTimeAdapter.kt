@@ -9,6 +9,8 @@ import com.example.cryptocurrency.databinding.ItemDialogRefreshTimeBinding
 
 class RefreshTimeAdapter(val onItemClicked: (String) -> Unit) :
     ListAdapter<String, RecyclerView.ViewHolder>(DiffCallback) {
+    var selectedItemPosition: Int = RecyclerView.NO_POSITION
+
     object DiffCallback : DiffUtil.ItemCallback<String>() {
         override fun areItemsTheSame(
             oldItem: String,
@@ -46,8 +48,11 @@ class RefreshTimeAdapter(val onItemClicked: (String) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(text: String) {
             binding.tvRefreshTime.text = text
+            binding.tvRefreshTime.isSelected = selectedItemPosition == adapterPosition
             binding.root.setOnClickListener {
                 onItemClicked.invoke(text)
+                selectedItemPosition = adapterPosition
+                notifyDataSetChanged()
             }
         }
     }

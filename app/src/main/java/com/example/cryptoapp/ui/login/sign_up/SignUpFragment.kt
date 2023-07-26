@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.cryptoapp.ui.base.BaseFragment
+import com.example.cryptoapp.utils.DeviceUtils
 import com.example.cryptoapp.utils.StringUtils
 import com.example.cryptoapp.utils.VALIDATION
 import com.example.cryptoapp.utils.observeData
@@ -15,6 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
     private val signUpViewModel by viewModels<SignUpViewModel>()
     override fun initViews() = with(binding) {
+        etEmail.requestFocus()
+        etEmail.postDelayed({
+            DeviceUtils.openKeyboard(requireActivity(), etEmail, null)
+        }, 200)
+
         btnSignUp.setOnClickListener {
             if (StringUtils.isEmailValid(etEmail.text.toString()) == VALIDATION.VALID && StringUtils.isPasswordValid(
                     etPassword.text.toString()

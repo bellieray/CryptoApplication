@@ -71,8 +71,14 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
                     binding.currentPrice = currentPrice
                 }
 
-                if (state.isAdded) notify("Crypto successfully favorited")
-                if (state.isRemoved) notify("Crypto successfully removed")
+                state.detailEvents?.firstOrNull()?.let { event ->
+                    when (event) {
+                        is DetailEvent.ShowCompleteMessage -> {
+                            notify(event.completeText)
+                            detailViewModel.eventConsumed(event)
+                        }
+                    }
+                }
 
             }
         }

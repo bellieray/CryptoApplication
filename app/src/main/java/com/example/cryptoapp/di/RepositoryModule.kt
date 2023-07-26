@@ -2,6 +2,7 @@ package com.example.cryptoapp.di
 
 import com.example.cryptoapp.data.repository.CryptoCurrencyRepositoryImpl
 import com.example.cryptoapp.data.repository.FirebaseRepositoryImpl
+import com.example.cryptoapp.domain.datasource.local.CryptoCurrencyLocalDataSource
 import com.example.cryptoapp.domain.datasource.remote.CryptoCurrencyRemoteDataSource
 import com.example.cryptoapp.domain.datasource.remote.FirebaseRemoteDataSource
 import com.example.cryptoapp.domain.repository.CryptoCurrencyRepository
@@ -18,8 +19,14 @@ import javax.inject.Singleton
 object RepositoryModule {
     @Singleton
     @Provides
-    fun provideCryptoCurrencyRepository(cryptoCurrencyRemoteDataSource: CryptoCurrencyRemoteDataSource): CryptoCurrencyRepository {
-       return CryptoCurrencyRepositoryImpl(cryptoCurrencyRemoteDataSource)
+    fun provideCryptoCurrencyRepository(
+        cryptoCurrencyRemoteDataSource: CryptoCurrencyRemoteDataSource,
+        cryptoCurrencyLocalDataSource: CryptoCurrencyLocalDataSource
+    ): CryptoCurrencyRepository {
+        return CryptoCurrencyRepositoryImpl(
+            cryptoCurrencyRemoteDataSource,
+            cryptoCurrencyLocalDataSource
+        )
     }
 
     @Singleton

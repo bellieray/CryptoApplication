@@ -90,6 +90,7 @@ class DetailViewModel @Inject constructor(
                         _detailViewState.update {
                             it.copy(isAdded = true, isLoading = false)
                         }
+                        addEventToList(DetailEvent.ShowCompleteMessage("Successfully Added"))
                         fetchCryptoDetail()
                     }
                     is Result.Failed -> {
@@ -108,8 +109,9 @@ class DetailViewModel @Inject constructor(
             when (val response = firebaseRepository.removeFromFavorites(coinId)) {
                 is Result.Success -> {
                     _detailViewState.update {
-                        it.copy(isLoading = false, isRemoved = true)
+                        it.copy(isLoading = false)
                     }
+                    addEventToList(DetailEvent.ShowCompleteMessage("Successfully Removed"))
                     fetchCryptoDetail()
                 }
                 is Result.Failed -> {
@@ -118,6 +120,20 @@ class DetailViewModel @Inject constructor(
                     fetchCryptoDetail()
                 }
             }
+        }
+    }
+
+    private fun addEventToList(viewEvent: DetailEvent) {
+        val eventList = _detailViewState.value.detailEvents?.toMutableList() ?: mutableListOf()
+        eventList.add(viewEvent)
+        _detailViewState.value = _detailViewState.value.copy(detailEvents = eventList)
+    }
+
+    fun eventConsumed(viewEvent: DetailEvent) {
+        _detailViewState.update { currentUiState ->
+            val newViewEventList =
+                currentUiState.detailEvents?.filterNot { it == viewEvent } ?: mutableListOf()
+            currentUiState.copy(detailEvents = newViewEventList)
         }
     }
 
@@ -145,5 +161,10 @@ data class DetailViewState(
     val isRemoved: Boolean = false,
     val isAdded: Boolean = false,
     val favoriteList: List<FavoriteCrypto>? = null,
-    val currentPrice: Double? = null
+    val currentPrice: Double? = null,
+    val detailEvents: List<DetailEvent>? = null
 )
+
+sealed class DetailEvent {
+    data class ShowCompleteMessage(val completeText: String) : DetailEvent()
+}

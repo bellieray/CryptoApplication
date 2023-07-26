@@ -76,6 +76,8 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/selector_bg_edit_text"
                     android:focusable="true"
+                    android:clickable="true"
+                    android:focusableInTouchMode="true"
                     android:fontFamily="@font/poppins_regular"
                     android:inputType="text"
                     android:maxLines="1"

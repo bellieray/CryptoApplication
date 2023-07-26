@@ -1,14 +1,12 @@
 package com.example.cryptoapp
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.cryptoapp.ui.favorite.FavoriteViewModel
 import com.example.cryptocurrency.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -26,8 +24,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupNavigation()
-        if (firebaseAuth.currentUser?.equals(null) != true) navController.navigate(R.id.homeFragment)
+        if (firebaseAuth.currentUser != null) {
+            navController.navigate(R.id.action_global_to_home)
+        } else navController.navigate(
+            R.id.signInFragment
+        )
     }
+
 
     private fun setupNavigation() {
         navHostFragment =

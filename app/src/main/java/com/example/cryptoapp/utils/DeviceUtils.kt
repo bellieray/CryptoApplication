@@ -2,7 +2,9 @@ package com.example.cryptoapp.utils
 
 import android.app.Activity
 import android.content.Context
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 
 object DeviceUtils {
@@ -25,4 +27,16 @@ object DeviceUtils {
             }
         }
     }
+
+    fun getDeviceHeight(activity: Activity): Int {
+        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            activity.windowManager.maximumWindowMetrics.bounds.height()
+        } else {
+            @Suppress("DEPRECATION")
+            (activity.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
+                .run { DisplayMetrics().also { defaultDisplay.getRealMetrics(it) } }
+                .run { return heightPixels }
+        }
+    }
+
 }

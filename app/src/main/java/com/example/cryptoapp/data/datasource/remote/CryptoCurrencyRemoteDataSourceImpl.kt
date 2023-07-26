@@ -9,7 +9,9 @@ import kotlinx.coroutines.delay
 import retrofit2.HttpException
 import javax.inject.Inject
 
-class CryptoCurrencyRemoteDataSourceImpl @Inject constructor(private val cryptoCurrencyService: CryptoCurrencyService) :
+class CryptoCurrencyRemoteDataSourceImpl @Inject constructor(
+    private val cryptoCurrencyService: CryptoCurrencyService,
+) :
     CryptoCurrencyRemoteDataSource {
     override suspend fun getAllCryptos(): Result<List<Crypto>> {
         return try {
@@ -23,7 +25,7 @@ class CryptoCurrencyRemoteDataSourceImpl @Inject constructor(private val cryptoC
         } catch (e: HttpException) {
             Result.Failed(e.message().toString())
         } catch (e: Throwable) {
-            Result.Failed(e.localizedMessage.toString())
+            Result.Failed(e.localizedMessage)
         }
     }
 
@@ -39,13 +41,14 @@ class CryptoCurrencyRemoteDataSourceImpl @Inject constructor(private val cryptoC
         } catch (e: HttpException) {
             Result.Failed(e.message().toString())
         } catch (e: Throwable) {
-            Result.Failed(e.localizedMessage.toString())
+            Result.Failed(e.localizedMessage)
         }
     }
 
     override suspend fun getPrice(coinId: String, refreshTime: String): Result<Double> {
         return try {
-            val data = cryptoCurrencyService.getCoinById(coinId).body()?.marketData?.currentPrice?.usd
+            val data =
+                cryptoCurrencyService.getCoinById(coinId).body()?.marketData?.currentPrice?.usd
             delay(refreshTime.toInt() * 1000L)
             Result.Success(data)
         } catch (e: Exception) {

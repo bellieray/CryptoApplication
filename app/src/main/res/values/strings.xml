@@ -10,4 +10,10 @@
     <string name="sign_up">Sign Up</string>
     <string name="registerAccount"><u>Do not have an account?</u></string>
     <string name="dollar_price">$ %f</string>
+    <string name="search">Search</string>
+    <string name="set_refresh_time">Set refresh time</string>
+    <string name="hashing_algorithm">Hashing Algorithm</string>
+    <string name="price_change_percentage">Price Change Percentage</string>
+    <string name="choose">Choose</string>
+    <string name="current_price">Current Price</string>
 </resources>
