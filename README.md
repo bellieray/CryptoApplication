@@ -3,8 +3,9 @@
 ## Screenshots
 
 <p align="center">
-<img src="/screenshots/detail.png" width="20%"/>
+<img src="/screenshots/sign_in.png" width="20%"/>
 <img src="/screenshots/sign_up.png" width="20%"/>
+<img src="/screenshots/detail.png" width="20%"/>
 <img src="/screenshots/home.png" width="20%"/>
 <img src="/screenshots/favorites.png" width="20%"/>
 </p>
