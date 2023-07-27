@@ -12,7 +12,7 @@ data class FavoriteCrypto(
 ) {
     companion object {
         fun from(qs: QuerySnapshot) =
-            qs.documents?.map {
+            qs.documents.map {
                 FavoriteCrypto(
                     id = it.get("id") as? String,
                     name = it.get("name") as? String,

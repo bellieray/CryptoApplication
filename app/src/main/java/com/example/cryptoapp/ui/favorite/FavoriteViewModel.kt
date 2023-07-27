@@ -7,7 +7,6 @@ import com.example.cryptoapp.model.ConsumableError
 import com.example.cryptoapp.model.FavoriteCrypto
 import com.example.cryptoapp.utils.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -19,10 +18,6 @@ class FavoriteViewModel @Inject constructor(val firebaseRepository: FirebaseRepo
     ViewModel() {
     private val _favoriteViewState = MutableStateFlow(FavoriteViewState())
     var favoriteViewState = _favoriteViewState.asStateFlow()
-
-    init {
-        fetchFavorites()
-    }
 
     fun fetchFavorites() {
         _favoriteViewState.update {
@@ -39,6 +34,7 @@ class FavoriteViewModel @Inject constructor(val firebaseRepository: FirebaseRepo
                     )
                 }
                 is Result.Failed -> {
+                    _favoriteViewState.update { it.copy(isLoading = false) }
                     addErrorToList(response.exception.toString())
                 }
             }

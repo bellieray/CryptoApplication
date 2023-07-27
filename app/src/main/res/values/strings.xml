@@ -16,4 +16,5 @@
     <string name="price_change_percentage">Price Change Percentage</string>
     <string name="choose">Choose</string>
     <string name="current_price">Current Price</string>
+    <string name="there_is_no_favorite_data">There is no favorite data</string>
 </resources>

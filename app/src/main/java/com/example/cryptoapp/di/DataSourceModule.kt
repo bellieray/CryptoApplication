@@ -8,6 +8,7 @@ import com.example.cryptoapp.data.datasource.remote.FirebaseRemoteDataSourceImpl
 import com.example.cryptoapp.domain.datasource.local.CryptoCurrencyLocalDataSource
 import com.example.cryptoapp.domain.datasource.remote.CryptoCurrencyRemoteDataSource
 import com.example.cryptoapp.domain.datasource.remote.FirebaseRemoteDataSource
+import com.example.cryptoapp.domain.repository.FirebaseRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import dagger.Module
@@ -21,8 +22,8 @@ import javax.inject.Singleton
 object DataSourceModule {
     @Singleton
     @Provides
-    fun provideCryptoCurrencyRemoteDataSource(cryptoCurrencyService: CryptoCurrencyService): CryptoCurrencyRemoteDataSource =
-        CryptoCurrencyRemoteDataSourceImpl(cryptoCurrencyService)
+    fun provideCryptoCurrencyRemoteDataSource(cryptoCurrencyService: CryptoCurrencyService, firebaseRepository: FirebaseRepository): CryptoCurrencyRemoteDataSource =
+        CryptoCurrencyRemoteDataSourceImpl(cryptoCurrencyService, firebaseRepository)
 
     @Singleton
     @Provides

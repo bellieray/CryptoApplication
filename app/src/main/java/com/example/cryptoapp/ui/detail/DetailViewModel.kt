@@ -79,13 +79,12 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun addToFavorite(cryptoDetail: CryptoDetail?) {
+    fun addToFavorite(cryptoDetail: CryptoDetail) {
         _detailViewState.update {
             it.copy(isLoading = true)
         }
         viewModelScope.launch(Dispatchers.IO) {
-            cryptoDetail?.let { safeModel ->
-                when (val response = firebaseRepository.addToFavorites(safeModel)) {
+                when (val response = firebaseRepository.addToFavorites(cryptoDetail)) {
                     is Result.Success -> {
                         _detailViewState.update {
                             it.copy(isAdded = true, isLoading = false)
@@ -99,7 +98,6 @@ class DetailViewModel @Inject constructor(
                         fetchCryptoDetail()
                     }
                 }
-            }
         }
     }
 

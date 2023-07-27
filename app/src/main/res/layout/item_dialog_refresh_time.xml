@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:background="@drawable/bg_item_other_horoscope"
+        android:background="@drawable/bg_item_dialog_refresh_time"
         android:fontFamily="@font/poppins_regular"
         android:gravity="center"
         android:padding="10dp"

@@ -50,11 +50,11 @@ class RefreshTimeBottomSheetDialog(val onDismissed: () -> Unit, val onValueGet: 
             )
         )
         refreshTimeAdapter.submitList((1..60).map { it.toString() })
-        binding.btnOtherHoroscope.setOnClickListener {
+        binding.btnChoose.setOnClickListener {
             onValueGet.invoke(value)
             dismiss()
         }
-        binding.clOtherHoroscope.let { sheetView ->
+        binding.clRefreshTime.let { sheetView ->
             SHEET_RATIO.let { ratio ->
                 val clParams = sheetView.layoutParams
                 clParams.height = (DeviceUtils.getDeviceHeight(requireActivity()) * ratio).toInt()

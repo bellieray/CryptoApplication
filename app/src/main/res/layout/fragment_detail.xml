@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="crpytoDetail"
+            name="cryptoDetail"
             type="com.example.cryptoapp.model.CryptoDetail" />
 
         <variable
@@ -23,8 +23,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/app_color"
-        tools:context=".ui.horoscope_detail.HoroscopeDetailFragment">
+        android:background="@color/app_color">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ic_arrow_back"
@@ -42,7 +41,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="44dp"
             android:layout_marginEnd="15dp"
-            android:src="@{crpytoDetail.isFavorite ? @drawable/ic_favorite_filled_cerise : @drawable/ic_favorite_empty_lilac_bloom}"
+            android:src="@{cryptoDetail.isFavorite ? @drawable/ic_favorite_filled_cerise : @drawable/ic_favorite_empty_lilac_bloom}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,7 +50,8 @@
             android:layout_width="126dp"
             android:layout_height="126dp"
             android:layout_marginTop="70dp"
-            app:imageUrl="@{crpytoDetail.imageUrl}"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{cryptoDetail.imageUrl}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -62,13 +62,13 @@
             android:id="@+id/btn_refresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
             android:background="@drawable/bg_personal_detail_button"
             android:fontFamily="@font/poppins_regular"
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/set_refresh_time"
             android:textAllCaps="false"
-            android:layout_marginTop="100dp"
             android:textColor="@android:color/white"
             android:textCursorDrawable="@null"
             android:textSize="21sp"
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:fontFamily="@font/poppins_regular"
-            android:text="@{crpytoDetail.name}"
+            android:text="@{cryptoDetail.name}"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/poppins_regular"
-            android:text="@{crpytoDetail.symbol}"
+            android:text="@{cryptoDetail.symbol}"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:fontFamily="@font/poppins_regular"
-            android:text="@{@string/dollar_price(currentPrice)}"
+            android:text="@{currentPrice != 0 &amp;&amp; currentPrice != cryptoDetail.price ? @string/dollar_price(currentPrice) : @string/dollar_price(cryptoDetail.price)}"
             android:textColor="#99FFFFFF"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -147,7 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:fontFamily="@font/poppins_regular"
-            android:text="@{crpytoDetail.hashingAlgorithm}"
+            android:text="@{cryptoDetail.hashingAlgorithm}"
             android:textColor="#99FFFFFF"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -177,7 +177,7 @@
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_price_change_title"
-            app:textColorBasedOnPrefix="@{String.valueOf(crpytoDetail.changeLast24H)}"
+            app:textColorBasedOnPrefix="@{String.valueOf(cryptoDetail.changeLast24H)}"
             tools:text="-3.18%" />
 
 
@@ -189,10 +189,10 @@
             android:ellipsize="end"
             android:fontFamily="@font/poppins_regular"
             android:lineSpacingExtra="3dp"
-            android:maxLines="6"
+            android:maxLines="4"
             android:paddingHorizontal="10dp"
             android:paddingBottom="10dp"
-            android:text="@{crpytoDetail.description}"
+            android:text="@{cryptoDetail.description}"
             android:textColor="#99FFFFFF"
             android:textSize="18sp"
             app:fontFamily="@font/poppins_regular"

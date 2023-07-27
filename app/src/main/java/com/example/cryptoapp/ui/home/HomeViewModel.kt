@@ -3,6 +3,7 @@ package com.example.cryptoapp.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cryptoapp.domain.repository.CryptoCurrencyRepository
+import com.example.cryptoapp.model.ConsumableError
 import com.example.cryptoapp.model.Crypto
 import com.example.cryptoapp.utils.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,20 +21,24 @@ class HomeViewModel @Inject constructor(
     private val _homeViewState = MutableStateFlow(HomeViewState())
     val homeViewState = _homeViewState.asStateFlow()
 
-    init {
-        fetchCryptoList()
-    }
-
-     fun fetchCryptoList() {
+    fun fetchCryptoList() {
+        if (_homeViewState.value.cryptoList != null) return
+        _homeViewState.update {
+            it.copy(isLoading = true)
+        }
         viewModelScope.launch {
             when (val response = cryptoCurrencyRepository.getAllCryptos()) {
                 is Result.Success -> {
                     _homeViewState.update {
                         response.data?.let { data -> insertItemToDb(data) }
-                        it.copy(isLoading = false)
+                        it.copy(isLoading = false, cryptoList = response.data)
                     }
                 }
-                else -> {
+                is Result.Failed -> {
+                    _homeViewState.update {
+                        it.copy(isLoading = false)
+                    }
+                    addErrorToList(response.exception)
                 }
             }
         }
@@ -41,17 +46,17 @@ class HomeViewModel @Inject constructor(
 
     private fun insertItemToDb(list: List<Crypto>) {
         viewModelScope.launch {
-            when (cryptoCurrencyRepository.insertAll(list)) {
+            when (val response = cryptoCurrencyRepository.insertAll(list)) {
                 is Result.Success -> {
                     _homeViewState.update {
                         it.copy(isLoading = false)
                     }
-                    fetchCryptoFromDb()
                 }
-                else -> {
+                is Result.Failed -> {
                     _homeViewState.update {
                         it.copy(isLoading = false)
                     }
+                    addErrorToList(response.exception)
                 }
             }
         }
@@ -66,7 +71,7 @@ class HomeViewModel @Inject constructor(
                 is Result.Success -> {
                     _homeViewState.update {
                         it.copy(
-                            cryptoList = response.data, isLoading = false
+                            searchResultList = response.data, isLoading = false
                         )
                     }
                 }
@@ -74,26 +79,7 @@ class HomeViewModel @Inject constructor(
                     _homeViewState.update {
                         it.copy(isLoading = false)
                     }
-                }
-            }
-        }
-    }
-
-    private fun fetchCryptoFromDb() {
-        _homeViewState.update {
-            it.copy(isLoading = true)
-        }
-        viewModelScope.launch {
-            when (val response = cryptoCurrencyRepository.getAllCryptosFromDb()) {
-                is Result.Success -> {
-                    _homeViewState.update {
-                        it.copy(isLoading = false, cryptoList = response.data)
-                    }
-                }
-                else -> {
-                    _homeViewState.update {
-                        it.copy(isLoading = false)
-                    }
+                    addErrorToList(response.exception)
                 }
             }
         }
@@ -102,14 +88,33 @@ class HomeViewModel @Inject constructor(
     fun clearSuggestionHistory() {
         viewModelScope.launch {
             _homeViewState.update {
-                it.copy(cryptoList = null)
+                it.copy(searchResultList = null)
             }
+        }
+    }
+
+
+    private fun addErrorToList(exception: String?) {
+        exception?.let {
+            val errorList =
+                _homeViewState.value.consumableErrors?.toMutableList() ?: mutableListOf()
+            errorList.add(ConsumableError(exception = it))
+            _homeViewState.value = _homeViewState.value.copy(consumableErrors = errorList)
+        }
+    }
+
+    fun errorConsumed(errorId: Long) {
+        _homeViewState.update { currentUiState ->
+            val newConsumableError = currentUiState.consumableErrors?.filterNot { it.id == errorId }
+            currentUiState.copy(consumableErrors = newConsumableError)
         }
     }
 }
 
 data class HomeViewState(
     val cryptoList: List<Crypto>? = null,
-    val isLoading: Boolean? = null,
-    val infoMessage: String? = null
+    val isLoading: Boolean = false,
+    val infoMessage: String? = null,
+    val searchResultList: List<Crypto>? = null,
+    val consumableErrors: List<ConsumableError>? = null,
 )

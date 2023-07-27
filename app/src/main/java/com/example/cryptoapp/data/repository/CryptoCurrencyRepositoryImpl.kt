@@ -29,4 +29,8 @@ class CryptoCurrencyRepositoryImpl @Inject constructor(
 
     override suspend fun insertAll(infos: List<Crypto>): Result<Unit> =
         cryptoCurrencyLocalDataSource.insertAll(infos)
+
+    override suspend fun detectPriceChange(): Crypto? =
+        cryptoCurrencyRemoteDataSource.detectPriceChange()
+
 }

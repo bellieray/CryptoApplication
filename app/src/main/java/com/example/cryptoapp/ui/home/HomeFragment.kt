@@ -1,7 +1,12 @@
 package com.example.cryptoapp.ui.home
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -18,12 +23,41 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 private const val MIN_TXT_LENGTH_FOR_SUGGESTION = 2
+private const val KEYBOARD_DELAY = 200L
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val homeViewModel by viewModels<HomeViewModel>()
     lateinit var homeListAdapter: HomeListAdapter
+
+    private val activityResultLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted.not()) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                    notify("Permission denied please go settings")
+                } else {
+                    notify("Permission denied please go settings")
+                }
+            }
+        }
+
     override fun initViews() = with(binding) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                activityResultLauncher.launch(
+                    Manifest.permission.POST_NOTIFICATIONS
+                )
+            }
+
+        }
+
+        homeViewModel.fetchCryptoList()
         homeListAdapter = HomeListAdapter(this@HomeFragment::onItemClicked)
         rvHome.adapter = homeListAdapter
         rvHome.addItemDecoration(
@@ -37,7 +71,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         etSearch.postDelayed({
             etSearch.requestFocus()
             DeviceUtils.openKeyboard(requireActivity(), etSearch)
-        }, 100)
+        }, KEYBOARD_DELAY)
         etSearch.setOnEditorActionListener { _, i, keyEvent ->
             if ((i == EditorInfo.IME_ACTION_SEARCH || (keyEvent != null && keyEvent.keyCode == KeyEvent.KEYCODE_ENTER)) && etSearch.text.toString()
                     .trim().length >= 2
@@ -47,24 +81,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             true
         }
 
-        etSearch.textChanges()
-            .filterNot { it.isNullOrBlank() }
-            .onEach {
-                if (it.toString().length >= MIN_TXT_LENGTH_FOR_SUGGESTION) {
-                    homeViewModel.search(it.toString())
-                } else {
-                    homeViewModel.clearSuggestionHistory()
-                }
-            }
-            .launchIn(viewLifecycleOwner.lifecycleScope)
+        etSearch.textChanges().filterNot { it.isNullOrBlank() }.onEach {
+            if (it.toString().length >= MIN_TXT_LENGTH_FOR_SUGGESTION) {
+                homeViewModel.search(it.toString())
+            } else homeViewModel.clearSuggestionHistory()
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         etSearch.addTextChangedListener {
             binding.isSearchClearButtonVisible = it.isNullOrEmpty().not()
-            if (it.isNullOrEmpty()) homeViewModel.fetchCryptoList()
         }
         ivSearchClear.setOnClickListener {
             etSearch.text?.clear()
-            homeViewModel.clearSuggestionHistory()
         }
     }
 
@@ -78,8 +105,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 it.cryptoList?.let { cryptos ->
                     homeListAdapter.submitList(cryptos)
                 }
-                it.isLoading?.let { isLoading ->
-                    binding.isLoading = isLoading
+
+                binding.isLoading = it.isLoading
+
+                it.searchResultList?.let { searchResult ->
+                    homeListAdapter.submitList(searchResult)
+                }
+
+                it.consumableErrors?.firstOrNull()?.let { error ->
+                    notify(error.exception)
+                    homeViewModel.errorConsumed(error.id)
                 }
             }
         }

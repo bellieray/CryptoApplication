@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var firebaseAuth: FirebaseAuth
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -30,7 +31,6 @@ class MainActivity : AppCompatActivity() {
             R.id.signInFragment
         )
     }
-
 
     private fun setupNavigation() {
         navHostFragment =
@@ -44,4 +44,5 @@ class MainActivity : AppCompatActivity() {
             bottomNavigation.isVisible = args?.getBoolean("hideBottomNav") != true
         }
     }
+
 }

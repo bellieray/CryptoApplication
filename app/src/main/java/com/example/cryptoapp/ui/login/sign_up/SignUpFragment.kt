@@ -19,7 +19,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         etEmail.requestFocus()
         etEmail.postDelayed({
             DeviceUtils.openKeyboard(requireActivity(), etEmail, null)
-        }, 200)
+        }, 400)
 
         btnSignUp.setOnClickListener {
             if (StringUtils.isEmailValid(etEmail.text.toString()) == VALIDATION.VALID && StringUtils.isPasswordValid(

@@ -30,7 +30,11 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
                     favoriteViewModel.fetchFavorites()
                 }
             } else {
-                detailViewModel.addToFavorite(detailViewModel.detailViewState.value.cryptoDetail)
+                detailViewModel.detailViewState.value.cryptoDetail?.let { safeModel ->
+                    detailViewModel.addToFavorite(
+                        safeModel
+                    )
+                }
                 favoriteViewModel.fetchFavorites()
             }
         }
@@ -64,7 +68,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
                 }
 
                 state.cryptoDetail?.let { safeModel ->
-                    binding.crpytoDetail = safeModel
+                    binding.cryptoDetail = safeModel
                 }
 
                 state.currentPrice?.let { currentPrice ->

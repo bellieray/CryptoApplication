@@ -8,4 +8,5 @@ interface CryptoCurrencyRemoteDataSource {
     suspend fun getAllCryptos(): Result<List<Crypto>>
     suspend fun getCryptoDetail(coinId: String): Result<CryptoDetailResponse>
     suspend fun getPrice(coinId: String, refreshTime: String): Result<Double>
+    suspend fun detectPriceChange(): Crypto?
 }

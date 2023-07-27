@@ -12,4 +12,5 @@ interface CryptoCurrencyRepository {
     suspend fun getAllCryptosFromDb(): Result<List<Crypto>>
     suspend fun search(word: String): Result<List<Crypto>>
     suspend fun insertAll(infos: List<Crypto>): Result<Unit>
+    suspend fun detectPriceChange(): Crypto?
 }

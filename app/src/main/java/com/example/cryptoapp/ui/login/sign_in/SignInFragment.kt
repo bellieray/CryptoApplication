@@ -1,6 +1,5 @@
 package com.example.cryptoapp.ui.login.sign_in
 
-import android.view.WindowManager
 import androidx.fragment.app.viewModels
 import com.example.cryptoapp.ui.base.BaseFragment
 import com.example.cryptoapp.utils.DeviceUtils
@@ -23,9 +22,9 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>() {
             DeviceUtils.openKeyboard(
                 requireActivity(),
                 etEmail,
-                WindowManager.LayoutParams.SOFT_INPUT_MODE_CHANGED
+                null
             )
-        }, 200)
+        }, 400)
 
         btnSignIn.setOnClickListener {
             if (StringUtils.isEmailValid(etEmail.text.toString()) == VALIDATION.VALID && StringUtils.isPasswordValid(

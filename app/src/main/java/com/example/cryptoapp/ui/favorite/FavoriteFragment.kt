@@ -17,6 +17,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>() {
     }
 
     override fun initViews() = with(binding) {
+        favoriteViewModel.fetchFavorites()
         rvFavorites.adapter = favoriteAdapter
         rvFavorites.addItemDecoration(
             BaseVerticalDividerItemDecoration(
@@ -41,7 +42,10 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>() {
 
                 state.favoriteList?.let { safeList ->
                     favoriteAdapter.submitList(safeList)
+                    binding.isHasData = safeList.isNotEmpty()
                 }
+
+                binding.isLoading = state.isLoading
             }
         }
 
