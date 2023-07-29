@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/homeFragment"
+        android:id="@id/home_nav_graph"
         android:checked="true"
         android:icon="@drawable/selector_bottom_bar_home"
         android:title="@string/home"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/favoriteFragment"
+        android:id="@id/favorite_nav_graph"
         android:icon="@drawable/selector_bottom_bar_favorite"
         android:title="@string/favorites"
         app:showAsAction="never" />

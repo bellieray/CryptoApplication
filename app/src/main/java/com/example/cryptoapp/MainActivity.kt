@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.cryptocurrency.NavGraphDirections
 import com.example.cryptocurrency.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -26,9 +27,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setupNavigation()
         if (firebaseAuth.currentUser != null) {
-            navController.navigate(R.id.action_global_to_home)
+            navController.navigate(NavGraphDirections.actionGlobalToHome())
         } else navController.navigate(
-            R.id.signInFragment
+           NavGraphDirections.actionGlobalToLogin()
         )
     }
 
@@ -43,6 +44,10 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, _, args ->
             bottomNavigation.isVisible = args?.getBoolean("hideBottomNav") != true
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
 }

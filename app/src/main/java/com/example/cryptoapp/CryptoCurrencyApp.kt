@@ -5,8 +5,8 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.example.cryptoapp.utils.Constants.SYNC_DATA
-import com.example.cryptoapp.worker.CryptoWorker
+import com.core.common.utils.Constants.SYNC_DATA
+import com.example.domain.worker.CryptoWorker
 import dagger.hilt.android.HiltAndroidApp
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

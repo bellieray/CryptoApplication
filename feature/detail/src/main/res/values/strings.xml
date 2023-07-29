@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dollar_price" translatable="false">$ %f</string>
+    <string name="search" translatable="false">Search</string>
+    <string name="set_refresh_time" translatable="false">Set refresh time</string>
+    <string name="hashing_algorithm" translatable="false">Hashing Algorithm</string>
+    <string name="price_change_percentage" translatable="false">Price Change Percentage</string>
+    <string name="current_price" translatable="false">Current Price</string>
+    <string name="choose" translatable="false">Choose</string>
+</resources>

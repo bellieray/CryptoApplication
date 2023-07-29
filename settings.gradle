@@ -14,3 +14,10 @@ dependencyResolutionManagement {
 }
 rootProject.name = "CryptoApp"
 include ':app'
+include ':feature:home'
+include ':core:common'
+include ':core:data'
+include ':core:domain'
+include ':feature:detail'
+include ':feature:login'
+include ':feature:favorite'
