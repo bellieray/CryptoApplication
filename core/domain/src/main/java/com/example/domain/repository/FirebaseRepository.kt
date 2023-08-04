@@ -1,6 +1,6 @@
 package com.example.domain.repository
 
-import com.example.cryptoapp.model.CryptoDetail
+import com.example.domain.model.CryptoDetail
 import com.example.domain.model.FavoriteCrypto
 import  com.example.domain.model.Result
 

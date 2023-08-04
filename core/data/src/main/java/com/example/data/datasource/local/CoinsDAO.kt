@@ -11,7 +11,7 @@ interface CoinsDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(infos: List<Crypto>)
 
-    @Query("SELECT * FROM crypto_list WHERE symbol LIKE '%' || :word || '%' OR name LIKE '%' || :word")
+    @Query("SELECT * FROM crypto_list WHERE LOWER(name) LIKE '%' || LOWER(:word) || '%' OR LOWER(symbol) LIKE '%' || LOWER(:word) || '%'")
     suspend fun search(word: String): List<Crypto>
 
     @Query("SELECT * FROM crypto_list")

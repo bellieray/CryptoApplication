@@ -23,7 +23,7 @@ class CryptoWorker @AssistedInject constructor(
             response?.name?.let {
                 NotificationHelper.showNotification(applicationContext, "CryptoCurrency", it)
             }
-            Log.e("WorkerSuccess", "Success")
+            Log.e("CryptoWorkerSuccess", "Success")
             return Result.success()
         } catch (e: Exception) {
             Log.e("WorkerFailed", e.localizedMessage)

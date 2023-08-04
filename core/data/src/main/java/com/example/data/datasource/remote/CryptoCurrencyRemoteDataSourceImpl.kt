@@ -1,13 +1,13 @@
 package com.example.data.datasource.remote
 
-import com.example.domain.repository.FirebaseRepository
-import com.example.domain.model.CryptoDetailResponse
 import com.example.data.api.CryptoCurrencyService
 import com.example.domain.datasource.remote.CryptoCurrencyRemoteDataSource
 import com.example.domain.model.Crypto
+import com.example.domain.model.CryptoDetailResponse
+import com.example.domain.model.Result
+import com.example.domain.repository.FirebaseRepository
 import kotlinx.coroutines.delay
 import retrofit2.HttpException
-import  com.example.domain.model.Result
 import javax.inject.Inject
 
 class CryptoCurrencyRemoteDataSourceImpl @Inject constructor(
@@ -20,7 +20,7 @@ class CryptoCurrencyRemoteDataSourceImpl @Inject constructor(
             val response = cryptoCurrencyService.getCoinList()
             val body = response.body()
             if (response.isSuccessful && body != null) {
-               Result.Success(body.take(25))
+                Result.Success(body.take(25))
             } else {
                 Result.Failed(response.errorBody()?.string())
             }

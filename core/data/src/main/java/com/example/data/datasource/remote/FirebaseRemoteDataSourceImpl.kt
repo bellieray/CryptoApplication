@@ -2,7 +2,7 @@ package com.example.data.datasource.remote
 
 import com.core.common.utils.Constants.COINS
 import com.example.domain.datasource.remote.FirebaseRemoteDataSource
-import com.example.cryptoapp.model.CryptoDetail
+import com.example.domain.model.CryptoDetail
 import com.example.domain.model.FavoriteCrypto
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth

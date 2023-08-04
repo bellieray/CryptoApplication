@@ -1,7 +1,7 @@
 package com.example.data.di
 
-import com.example.data.api.repository.CryptoCurrencyRepositoryImpl
-import com.example.data.api.repository.FirebaseRepositoryImpl
+import com.example.data.repository.CryptoCurrencyRepositoryImpl
+import com.example.data.repository.FirebaseRepositoryImpl
 import com.example.domain.datasource.local.CryptoCurrencyLocalDataSource
 import com.example.domain.datasource.remote.CryptoCurrencyRemoteDataSource
 import com.example.domain.datasource.remote.FirebaseRemoteDataSource

@@ -7,7 +7,7 @@
 
         <variable
             name="cryptoDetail"
-            type="com.example.cryptoapp.model.CryptoDetail" />
+            type="com.example.domain.model.CryptoDetail" />
 
         <variable
             name="isLoading"

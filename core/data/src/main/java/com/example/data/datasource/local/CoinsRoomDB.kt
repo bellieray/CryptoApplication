@@ -1,4 +1,4 @@
-package com.example.cryptoapp.data.datasource.local
+package com.example.data.datasource.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

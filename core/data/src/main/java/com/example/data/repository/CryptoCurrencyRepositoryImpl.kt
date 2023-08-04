@@ -1,4 +1,4 @@
-package com.example.data.api.repository
+package com.example.data.repository
 
 import  com.example.domain.model.Result
 import com.example.domain.datasource.local.CryptoCurrencyLocalDataSource

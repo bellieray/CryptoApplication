@@ -1,8 +1,8 @@
-package com.example.data.api.repository
+package com.example.data.repository
 
 import com.example.domain.datasource.remote.FirebaseRemoteDataSource
 import com.example.domain.repository.FirebaseRepository
-import com.example.cryptoapp.model.CryptoDetail
+import com.example.domain.model.CryptoDetail
 import com.example.domain.model.FavoriteCrypto
 import javax.inject.Inject
 import javax.inject.Singleton

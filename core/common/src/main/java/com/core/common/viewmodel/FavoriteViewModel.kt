@@ -2,10 +2,10 @@ package com.core.common.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import  com.example.domain.model.Result
 import com.example.cryptoapp.model.ConsumableError
 import com.example.domain.model.FavoriteCrypto
-import com.example.domain.repository.FirebaseRepository
+import com.example.domain.model.Result
+import com.example.domain.usecase.GetAllFavoritesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoriteViewModel @Inject constructor(val firebaseRepository: FirebaseRepository) :
+class FavoriteViewModel @Inject constructor(private val getAllFavoritesUseCase: GetAllFavoritesUseCase) :
     ViewModel() {
     private val _favoriteViewState = MutableStateFlow(FavoriteViewState())
     var favoriteViewState = _favoriteViewState.asStateFlow()
@@ -24,7 +24,7 @@ class FavoriteViewModel @Inject constructor(val firebaseRepository: FirebaseRepo
             it.copy(isLoading = true)
         }
         viewModelScope.launch {
-            when (val response = firebaseRepository.getAllFavorites()) {
+            when (val response = getAllFavoritesUseCase.invoke()) {
                 is Result.Success -> {
                     _favoriteViewState.emit(
                         FavoriteViewState(

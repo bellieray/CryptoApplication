@@ -1,7 +1,4 @@
-package com.example.cryptoapp.model
-
-import com.example.domain.model.CryptoDetailResponse
-import com.example.domain.model.FavoriteCrypto
+package com.example.domain.model
 
 data class CryptoDetail(
     val id: String?,

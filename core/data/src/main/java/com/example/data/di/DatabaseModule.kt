@@ -3,7 +3,7 @@ package com.example.data.di
 import android.app.Application
 import androidx.room.Room
 import com.example.data.datasource.local.CoinsDAO
-import com.example.cryptoapp.data.datasource.local.CryptoDB
+import com.example.data.datasource.local.CryptoDB
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

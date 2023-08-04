@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.repository.CryptoCurrencyRepository
 import com.example.domain.repository.FirebaseRepository
 import com.example.cryptoapp.model.ConsumableError
-import com.example.cryptoapp.model.CryptoDetail
+import com.example.domain.model.CryptoDetail
 import com.example.domain.model.FavoriteCrypto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
