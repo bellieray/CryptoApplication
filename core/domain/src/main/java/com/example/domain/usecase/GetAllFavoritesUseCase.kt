@@ -1,8 +1,8 @@
 package com.example.domain.usecase
 
-import com.example.domain.repository.FirebaseRepository
-import javax.inject.Inject
+import com.example.domain.model.FavoriteCrypto
+import com.example.domain.model.Result
 
-class GetAllFavoritesUseCase @Inject constructor(private val firebaseRepository: FirebaseRepository) {
-    suspend operator fun invoke() = firebaseRepository.getAllFavorites()
+interface GetAllFavoritesUseCase {
+    suspend operator fun invoke(): Result<List<FavoriteCrypto>>
 }

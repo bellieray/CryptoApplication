@@ -1,10 +1,8 @@
 package com.example.domain.usecase
 
 import com.example.domain.model.CryptoDetail
-import com.example.domain.repository.FirebaseRepository
-import javax.inject.Inject
+import com.example.domain.model.Result
 
-class AddToFavoriteUseCase @Inject constructor(private val firebaseRepository: FirebaseRepository) {
-    suspend operator fun invoke(cryptoDetail: CryptoDetail) =
-        firebaseRepository.addToFavorites(cryptoDetail)
+interface AddToFavoriteUseCase {
+    suspend operator fun invoke(cryptoDetail: CryptoDetail): Result<Unit>
 }

@@ -3,24 +3,28 @@ package com.feature.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.repository.CryptoCurrencyRepository
-import com.example.domain.repository.FirebaseRepository
 import com.example.cryptoapp.model.ConsumableError
 import com.example.domain.model.CryptoDetail
 import com.example.domain.model.FavoriteCrypto
+import com.example.domain.model.Result
+import com.example.domain.usecase.AddToFavoriteUseCase
+import com.example.domain.usecase.GetCryptoDetailUseCase
+import com.example.domain.usecase.GetPriceUseCase
+import com.example.domain.usecase.RemoveFromFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import  com.example.domain.model.Result
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    val repository: CryptoCurrencyRepository,
-    private val firebaseRepository: FirebaseRepository,
+    private val getCryptoDetailUseCase: GetCryptoDetailUseCase,
+    private val getPriceUseCase: GetPriceUseCase,
+    private val addToFavoriteUseCase: AddToFavoriteUseCase,
+    private val removeFromFavoriteUseCase: RemoveFromFavoriteUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _detailViewState = MutableStateFlow(DetailViewState())
@@ -36,7 +40,7 @@ class DetailViewModel @Inject constructor(
         }
         viewModelScope.launch {
             savedStateHandle.get<String>("id")?.let { safeId ->
-                when (val response = repository.getCryptoDetail(safeId)) {
+                when (val response = getCryptoDetailUseCase(safeId)) {
                     is Result.Success -> {
                         _detailViewState.update {
                             it.copy(
@@ -61,7 +65,7 @@ class DetailViewModel @Inject constructor(
     fun changeRefreshTime(time: String) {
         viewModelScope.launch {
             val id = savedStateHandle.get<String>("id")
-            when (val response = id?.let { repository.getPrice(it, time) }) {
+            when (val response = id?.let { getPriceUseCase(it, time) }) {
                 is Result.Success -> {
                     _detailViewState.update { it.copy(currentPrice = response.data) }
                 }
@@ -84,27 +88,27 @@ class DetailViewModel @Inject constructor(
             it.copy(isLoading = true)
         }
         viewModelScope.launch(Dispatchers.IO) {
-                when (val response = firebaseRepository.addToFavorites(cryptoDetail)) {
-                    is Result.Success -> {
-                        _detailViewState.update {
-                            it.copy(isAdded = true, isLoading = false)
-                        }
-                        addEventToList(DetailEvent.ShowCompleteMessage("Successfully Added"))
-                        fetchCryptoDetail()
+            when (val response = addToFavoriteUseCase(cryptoDetail)) {
+                is Result.Success -> {
+                    _detailViewState.update {
+                        it.copy(isAdded = true, isLoading = false)
                     }
-                    is Result.Failed -> {
-                        addErrorToList(response.exception)
-                        _detailViewState.update { it.copy(isLoading = false) }
-                        fetchCryptoDetail()
-                    }
+                    addEventToList(DetailEvent.ShowCompleteMessage("Successfully Added"))
+                    fetchCryptoDetail()
                 }
+                is Result.Failed -> {
+                    addErrorToList(response.exception)
+                    _detailViewState.update { it.copy(isLoading = false) }
+                    fetchCryptoDetail()
+                }
+            }
         }
     }
 
     fun removeFromFavorite(coinId: String) {
         _detailViewState.update { it.copy(isLoading = true) }
         viewModelScope.launch(Dispatchers.IO) {
-            when (val response = firebaseRepository.removeFromFavorites(coinId)) {
+            when (val response = removeFromFavoriteUseCase(coinId)) {
                 is Result.Success -> {
                     _detailViewState.update {
                         it.copy(isLoading = false)

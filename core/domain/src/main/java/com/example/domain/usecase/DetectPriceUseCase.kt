@@ -1,8 +1,7 @@
 package com.example.domain.usecase
 
-import com.example.domain.repository.CryptoCurrencyRepository
-import javax.inject.Inject
+import com.example.domain.model.Crypto
 
-class DetectPriceUseCase @Inject constructor(private val cryptoCurrencyRepository: CryptoCurrencyRepository) {
-    suspend operator fun invoke() = cryptoCurrencyRepository.detectPriceChange()
+interface DetectPriceUseCase {
+    suspend operator fun invoke(): Crypto?
 }

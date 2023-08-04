@@ -15,12 +15,12 @@ class SignInViewModelTest {
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
-      //  Dispatchers.setMain(Dispatchers.Unconfined)
+    //    Dispatchers.setMain(Dispatchers.Unconfined)
    //     signInViewModel = SignInViewModel(FakeFirebaseRepository())
     }
 
     @After
     fun tearDown() {
-   //     Dispatchers.resetMain()
+     //   Dispatchers.resetMain()
     }
 }

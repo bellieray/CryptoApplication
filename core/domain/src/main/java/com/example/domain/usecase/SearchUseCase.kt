@@ -1,8 +1,8 @@
 package com.example.domain.usecase
 
-import com.example.domain.repository.CryptoCurrencyRepository
-import javax.inject.Inject
+import com.example.domain.model.Crypto
 
-class SearchUseCase @Inject constructor(val currencyRepository: CryptoCurrencyRepository) {
-    suspend operator fun invoke(word: String) = currencyRepository.search(word)
+interface SearchUseCase {
+    suspend operator fun invoke(word: String): com.example.domain.model.Result<List<Crypto>>
+
 }

@@ -2,9 +2,9 @@ package com.feature.login.sign_up
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.repository.FirebaseRepository
 import com.example.cryptoapp.model.ConsumableError
 import com.example.domain.model.Result
+import com.example.domain.usecase.RegisterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(private val firebaseRepository: FirebaseRepository) :
+class SignUpViewModel @Inject constructor(private val registerUseCase: RegisterUseCase) :
     ViewModel() {
     private val _signUpViewState = MutableStateFlow(SignUpViewState())
     val signUpViewState = _signUpViewState.asStateFlow()
@@ -21,7 +21,7 @@ class SignUpViewModel @Inject constructor(private val firebaseRepository: Fireba
     fun register(email: String, password: String) {
         _signUpViewState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            when (val response = firebaseRepository.register(email, password)) {
+            when (val response = registerUseCase(email, password)) {
                 is Result.Success -> {
                     addEventToList(SignUpEvent.NavigateToSignIn)
                     _signUpViewState.update { it.copy(isLoading = false) }

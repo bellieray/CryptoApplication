@@ -1,8 +1,7 @@
 package com.example.domain.usecase
 
-import com.example.domain.repository.CryptoCurrencyRepository
-import javax.inject.Inject
+import com.example.domain.model.CryptoDetailResponse
 
-class GetCryptoDetailUseCase @Inject constructor(private val cryptoCurrencyRepository: CryptoCurrencyRepository) {
-    suspend operator fun invoke(coinId: String) = cryptoCurrencyRepository.getCryptoDetail(coinId)
+interface GetCryptoDetailUseCase {
+    suspend operator fun invoke(coinId: String): com.example.domain.model.Result<CryptoDetailResponse>
 }

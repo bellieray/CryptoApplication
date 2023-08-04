@@ -2,20 +2,24 @@ package com.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.repository.CryptoCurrencyRepository
 import com.example.cryptoapp.model.ConsumableError
 import com.example.domain.model.Crypto
+import com.example.domain.model.Result
+import com.example.domain.usecase.GetAllCryptosUseCase
+import com.example.domain.usecase.InsertListToDbUseCase
+import com.example.domain.usecase.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import com.example.domain.model.Result
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val cryptoCurrencyRepository: CryptoCurrencyRepository
+    private val getAllCryptosUseCase: GetAllCryptosUseCase,
+    private val insertListToDbUseCase: InsertListToDbUseCase,
+    private val searchUseCase: SearchUseCase,
 ) :
     ViewModel() {
     private val _homeViewState = MutableStateFlow(HomeViewState())
@@ -27,7 +31,7 @@ class HomeViewModel @Inject constructor(
             it.copy(isLoading = true)
         }
         viewModelScope.launch {
-            when (val response = cryptoCurrencyRepository.getAllCryptos()) {
+            when (val response = getAllCryptosUseCase()) {
                 is Result.Success -> {
                     _homeViewState.update {
                         response.data?.let { data -> insertItemToDb(data) }
@@ -46,7 +50,7 @@ class HomeViewModel @Inject constructor(
 
     private fun insertItemToDb(list: List<Crypto>) {
         viewModelScope.launch {
-            when (val response = cryptoCurrencyRepository.insertAll(list)) {
+            when (val response = insertListToDbUseCase(list)) {
                 is Result.Success -> {
                     _homeViewState.update {
                         it.copy(isLoading = false)
@@ -67,7 +71,7 @@ class HomeViewModel @Inject constructor(
             it.copy(isLoading = true)
         }
         viewModelScope.launch {
-            when (val response = cryptoCurrencyRepository.search(text)) {
+            when (val response = searchUseCase(text)) {
                 is Result.Success -> {
                     _homeViewState.update {
                         it.copy(
