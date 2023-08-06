@@ -1,8 +1,9 @@
 package com.feature.login.sign_in
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cryptoapp.model.ConsumableError
+import com.example.domain.model.ConsumableError
 import com.example.domain.model.Result
 import com.example.domain.usecase.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +14,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignInViewModel @Inject constructor(private val loginUseCase: LoginUseCase) :
+class
+SignInViewModel @Inject constructor(private val loginUseCase: LoginUseCase) :
     ViewModel() {
     private val _signInViewState = MutableStateFlow(SignInViewState())
     val signInViewState = _signInViewState.asStateFlow()
@@ -34,7 +36,8 @@ class SignInViewModel @Inject constructor(private val loginUseCase: LoginUseCase
         }
     }
 
-    private fun addEventToList(viewEvent: SignInEvent) {
+
+     fun addEventToList(viewEvent: SignInEvent) {
         val eventList = _signInViewState.value.signInEvents?.toMutableList() ?: mutableListOf()
         eventList.add(viewEvent)
         _signInViewState.value = _signInViewState.value.copy(signInEvents = eventList)
@@ -48,7 +51,7 @@ class SignInViewModel @Inject constructor(private val loginUseCase: LoginUseCase
         }
     }
 
-    private fun addErrorToList(exception: String?) {
+     fun addErrorToList(exception: String?) {
         exception?.let {
             val errorList =
                 signInViewState.value.consumableErrors?.toMutableList() ?: mutableListOf()

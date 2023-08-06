@@ -2,7 +2,7 @@ package com.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cryptoapp.model.ConsumableError
+import com.example.domain.model.ConsumableError
 import com.example.domain.model.Crypto
 import com.example.domain.model.Result
 import com.example.domain.usecase.GetAllCryptosUseCase

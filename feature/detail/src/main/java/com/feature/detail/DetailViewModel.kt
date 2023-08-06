@@ -3,7 +3,7 @@ package com.feature.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cryptoapp.model.ConsumableError
+import com.example.domain.model.ConsumableError
 import com.example.domain.model.CryptoDetail
 import com.example.domain.model.FavoriteCrypto
 import com.example.domain.model.Result

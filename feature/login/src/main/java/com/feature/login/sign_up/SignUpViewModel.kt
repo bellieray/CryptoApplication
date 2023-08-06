@@ -2,7 +2,7 @@ package com.feature.login.sign_up
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cryptoapp.model.ConsumableError
+import com.example.domain.model.ConsumableError
 import com.example.domain.model.Result
 import com.example.domain.usecase.RegisterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,13 +28,13 @@ class SignUpViewModel @Inject constructor(private val registerUseCase: RegisterU
                 }
                 is Result.Failed -> {
                     addErrorToList(response.exception)
-                    _signUpViewState.update { it.copy(isLoading = true) }
+                    _signUpViewState.update { it.copy(isLoading = false) }
                 }
             }
         }
     }
 
-    private fun addEventToList(viewEvent: SignUpEvent) {
+     fun addEventToList(viewEvent: SignUpEvent) {
         val eventList = signUpViewState.value.signUpEvents?.toMutableList() ?: mutableListOf()
         eventList.add(viewEvent)
         _signUpViewState.value = signUpViewState.value.copy(signUpEvents = eventList)
@@ -48,7 +48,7 @@ class SignUpViewModel @Inject constructor(private val registerUseCase: RegisterU
         }
     }
 
-    private fun addErrorToList(exception: String?) {
+     fun addErrorToList(exception: String?) {
         exception?.let {
             val errorList =
                 _signUpViewState.value.consumableErrors?.toMutableList() ?: mutableListOf()
