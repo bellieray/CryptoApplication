@@ -90,16 +90,16 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             when (val response = addToFavoriteUseCase(cryptoDetail)) {
                 is Result.Success -> {
+                    addEventToList(DetailEvent.ShowCompleteMessage("Successfully Added"))
+                    fetchCryptoDetail()
                     _detailViewState.update {
                         it.copy(isAdded = true, isLoading = false)
                     }
-                    addEventToList(DetailEvent.ShowCompleteMessage("Successfully Added"))
-                    fetchCryptoDetail()
                 }
                 is Result.Failed -> {
                     addErrorToList(response.exception)
-                    _detailViewState.update { it.copy(isLoading = false) }
                     fetchCryptoDetail()
+                    _detailViewState.update { it.copy(isLoading = false) }
                 }
             }
         }

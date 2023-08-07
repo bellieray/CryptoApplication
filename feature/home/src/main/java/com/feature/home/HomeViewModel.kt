@@ -48,7 +48,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun insertItemToDb(list: List<Crypto>) {
+     fun insertItemToDb(list: List<Crypto>) {
         viewModelScope.launch {
             when (val response = insertListToDbUseCase(list)) {
                 is Result.Success -> {
@@ -98,7 +98,7 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    private fun addErrorToList(exception: String?) {
+    fun addErrorToList(exception: String?) {
         exception?.let {
             val errorList =
                 _homeViewState.value.consumableErrors?.toMutableList() ?: mutableListOf()
