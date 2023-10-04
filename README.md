@@ -1,6 +1,6 @@
 <h1 align="center">CryptoApp</h1></br>
 
-##INFO
+## INFO
 !! You can pass the module-dev branch to see modularization and unit test. !!
 
 ## Screenshots
